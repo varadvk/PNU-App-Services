@@ -4,8 +4,9 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,8 @@ public class AWSUtil {
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         this.s3client = new AmazonS3Client(credentials);
+        // this.s3client.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
+        // this.s3client.setObjectAcl(bucketName, secretKey, CannedAccessControlList.PublicRead);
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
@@ -43,6 +46,7 @@ public class AWSUtil {
 
     private void uploadFileTos3bucket(String fileName, File file) {
         s3client.putObject(new PutObjectRequest(bucketName, fileName, file));
+        s3client.setObjectAcl(bucketName, fileName, CannedAccessControlList.PublicRead);
     }
 
     public String uploadFile(MultipartFile multipartFile) {
