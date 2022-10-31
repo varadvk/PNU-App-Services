@@ -13,6 +13,15 @@ public class Student {
     private String studentAddress;
     private String studentContact;
     private String studentDocumentURL;
+    private String profilePictureUrl;
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
 
     public Integer getStudentId() {
         return studentId;

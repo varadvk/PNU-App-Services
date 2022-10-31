@@ -23,8 +23,10 @@ public class StudentController {
 
     @PostMapping({"/addStudentDetails"})
     public Student addStudentDetails(@RequestPart("studentData") Student student,
-                                     @RequestPart("studentDocuments") MultipartFile file) {
-        return studentService.addStudentDetails(student, file);
+                                     @RequestPart("studentDocuments") MultipartFile file,
+                                     @RequestPart("studentProfilePicture") MultipartFile profilePicture
+    ) {
+        return studentService.addStudentDetails(student, file, profilePicture);
     }
 
     @GetMapping({"/getAllStudents"})

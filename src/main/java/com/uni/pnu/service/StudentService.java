@@ -19,9 +19,11 @@ public class StudentService {
     @Autowired
     private AWSUtil awsUtil;
 
-    public Student addStudentDetails(Student student, MultipartFile file) {
+    public Student addStudentDetails(Student student, MultipartFile file, MultipartFile profilePicture) {
         String fileUrl = awsUtil.uploadFile(file);
+        String profilePictureUrl = awsUtil.uploadFile(profilePicture);
         student.setStudentDocumentURL(fileUrl);
+        student.setProfilePictureUrl(profilePictureUrl);
         return studentDao.save(student);
     }
 
@@ -35,6 +37,7 @@ public class StudentService {
         for (int i = 1; i <= 100; i++) {
             Student s = new Student();
             s.setStudentId(i);
+            s.setProfilePictureUrl("https://pnubukcet.s3.amazonaws.com/1667229095617-horses-ge578c06d1_1920-min.jpg");
             s.setStudentName("Student - "+ i);
             s.setStudentAddress("Address - "+ i);
             s.setStudentContact("909090 - "+ i);
